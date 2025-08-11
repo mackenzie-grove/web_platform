@@ -1,45 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Welcome from './components/Welcome';
+import LandingPage from './components/LandingPage';
+import BusinessBorrowers from './components/BusinessBorrowers';
+import Lender from './components/Lender';
+import GetStarted from './components/GetStarted';
+import Step1 from './components/Step1';
 import Success from './components/Success';
 import SuccessSubmission from './components/SuccessSubmission';
 import SuccessMessage from './components/SuccessMessage';
 
 const App = () => {
-  const [currentStep, setCurrentStep] = useState('welcome');
-  const [language, setLanguage] = useState(null);
-
-  const handleLanguageSelect = (lang) => {
-    setLanguage(lang);
-    setCurrentStep('success');
-  };
-
-  const handleNextStep = () => {
-    if (currentStep === 'success') {
-      setCurrentStep('success-submission');
-    } else if (currentStep === 'success-submission') {
-      setCurrentStep('success-message');
-    }
-  };
-
-  const renderCurrentStep = () => {
-    switch (currentStep) {
-      case 'welcome':
-        return <Welcome onLanguageSelect={handleLanguageSelect} />;
-      case 'success':
-        return <Success onNext={handleNextStep} />;
-      case 'success-submission':
-        return <SuccessSubmission onNext={handleNextStep} />;
-      case 'success-message':
-        return <SuccessMessage />;
-      default:
-        return <Welcome onLanguageSelect={handleLanguageSelect} />;
-    }
-  };
-
   return (
-    <div className="App">
-      {renderCurrentStep()}
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Navigate to="/language" replace />} />
+          <Route path="/language" element={<Welcome />} />
+          <Route path="/landing" element={<LandingPage />} />
+          <Route path="/borrowers" element={<BusinessBorrowers />} />
+          <Route path="/lenders" element={<Lender />} />
+          <Route path="/get-started" element={<GetStarted />} />
+          <Route path="/apply/step1" element={<Step1 />} />
+          <Route path="/apply/success" element={<Success />} />
+          <Route path="/apply/submission-success" element={<SuccessSubmission />} />
+          <Route path="/apply/final-success" element={<SuccessMessage />} />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 

@@ -12,7 +12,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:prod": "NODE_ENV=production react-scripts build",
+    "docker:build": "docker build -t grove-web-platform .",
+    "docker:run": "docker run -p 8080:8080 grove-web-platform"
   },
   "eslintConfig": {
     "extends": [
